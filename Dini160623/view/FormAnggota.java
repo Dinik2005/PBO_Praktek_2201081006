@@ -2,11 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package Dini.view;
+package Dini160623.view;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import Dini.Controller.AnggotaController;
+import Dini160623.Controller.AnggotaController;
 /**
  *
  * @author Ideapad 3 14ITL6
@@ -111,40 +111,63 @@ public class FormAnggota extends javax.swing.JFrame {
         cboJenisKelamin.setBounds(140, 110, 120, 22);
 
         btnInsert.setText("Insert");
+        btnInsert.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInsertActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnInsert);
         btnInsert.setBounds(20, 150, 72, 23);
 
         btnUpdate.setText("Update");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnUpdate);
         btnUpdate.setBounds(110, 150, 72, 23);
 
         btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnDelete);
         btnDelete.setBounds(200, 150, 72, 23);
 
         btnCancel.setText("Cancel");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnCancel);
         btnCancel.setBounds(290, 150, 72, 23);
 
         tabelAnggota.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Kode Anggota", "Nama Anggota", "Alamat", "Jenis Kelamin"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, true, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabelAnggota.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelAnggotaMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabelAnggota);
-        if (tabelAnggota.getColumnModel().getColumnCount() > 0) {
-            tabelAnggota.getColumnModel().getColumn(0).setHeaderValue("Title 1");
-            tabelAnggota.getColumnModel().getColumn(1).setHeaderValue("Title 2");
-            tabelAnggota.getColumnModel().getColumn(2).setHeaderValue("Title 3");
-            tabelAnggota.getColumnModel().getColumn(3).setHeaderValue("Title 4");
-        }
 
         getContentPane().add(jScrollPane1);
         jScrollPane1.setBounds(10, 182, 410, 140);
@@ -156,6 +179,34 @@ public class FormAnggota extends javax.swing.JFrame {
     private void txtKodeAnggotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtKodeAnggotaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtKodeAnggotaActionPerformed
+
+    private void tabelAnggotaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelAnggotaMouseClicked
+       controller.getAnggota();
+// TODO add your handling code here:
+    }//GEN-LAST:event_tabelAnggotaMouseClicked
+
+    private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertActionPerformed
+        controller.insert();
+        controller.clearForm();
+        controller.tampil();
+ // TODO add your handling code here:
+    }//GEN-LAST:event_btnInsertActionPerformed
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        controller.updateAnggota();
+        controller.tampil();
+        controller.clearForm(); // TODO add your handling code here:
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        controller.deleteAnggota();
+        controller.tampil();
+        controller.clearForm();// TODO add your handling code here:
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        controller.clearForm();// TODO add your handling code here:
+    }//GEN-LAST:event_btnCancelActionPerformed
 
     /**
      * @param args the command line arguments

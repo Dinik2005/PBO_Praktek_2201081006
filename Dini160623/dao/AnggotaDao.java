@@ -2,8 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Dini.dao;
-import Dini.model.Anggota;
+package Dini160623.dao;
+import Dini160623.model.Anggota;
 import java.util.List;
 /**
  *

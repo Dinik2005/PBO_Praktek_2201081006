@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Dini.model;
+package Dini160623.model;
 
 /**
  *
@@ -14,12 +14,17 @@ public class Anggota {
     private String alamat;
     private String jenisKelamin;
     
+    public Anggota(){
+       }
+   
     public Anggota (String kodeAnggota, String namaAnggota, String alamat, String jenisKelamin){
         this.kodeAnggota = kodeAnggota;
         this.namaAnggota = namaAnggota;
         this.alamat = alamat;
         this.jenisKelamin = jenisKelamin;   
     }
+
+    
     
     //kodeanggota
     public String getKodeAnggota (){
