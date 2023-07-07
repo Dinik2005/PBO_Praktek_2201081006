@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import Dini160623.controller.PeminjamanController;
+import javax.swing.JComboBox;
 
 /**
  *
@@ -24,7 +25,9 @@ public class FormPeminjaman extends javax.swing.JFrame {
         initComponents();
         controller = new PeminjamanController(this);
         controller.clearForm();
+        controller.isiCombo();
         controller.tampil();
+        
     }
 
     public JButton getBtnCancel() {
@@ -66,23 +69,6 @@ public class FormPeminjaman extends javax.swing.JFrame {
     public void setTabelPeminjaman(JTable TabelPeminjaman) {
         this.TabelPeminjaman = TabelPeminjaman;
     }
-
-    public JTextField getTxtKodeAnggota() {
-        return txtKodeAnggota;
-    }
-
-    public void setTxtKodeAnggota(JTextField txtKodeAnggota) {
-        this.txtKodeAnggota = txtKodeAnggota;
-    }
-
-    public JTextField getTxtKodeBuku() {
-        return txtKodeBuku;
-    }
-
-    public void setTxtKodeBuku(JTextField txtKodeBuku) {
-        this.txtKodeBuku = txtKodeBuku;
-    }
-
     public JTextField getTxtTglKembali() {
         return txtTglKembali;
     }
@@ -99,6 +85,17 @@ public class FormPeminjaman extends javax.swing.JFrame {
         this.txtTglPinjam = txtTglPinjam;
     }
 
+    public JComboBox<String> getCboAnggota() {
+        return CboAnggota;
+    }
+
+    public JComboBox<String> getCboBuku() {
+        return Cbobuku;
+    }
+
+ 
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -112,8 +109,6 @@ public class FormPeminjaman extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        txtKodeAnggota = new javax.swing.JTextField();
-        txtKodeBuku = new javax.swing.JTextField();
         txtTglKembali = new javax.swing.JTextField();
         txtTglPinjam = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -122,6 +117,8 @@ public class FormPeminjaman extends javax.swing.JFrame {
         btnUpdate = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
+        CboAnggota = new javax.swing.JComboBox<>();
+        Cbobuku = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -132,12 +129,6 @@ public class FormPeminjaman extends javax.swing.JFrame {
         jLabel3.setText("Tanggal Peminjaman");
 
         jLabel4.setText("Tanggal Pengembalian");
-
-        txtKodeAnggota.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtKodeAnggotaActionPerformed(evt);
-            }
-        });
 
         txtTglKembali.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -153,13 +144,13 @@ public class FormPeminjaman extends javax.swing.JFrame {
 
         TabelPeminjaman.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Kode Anggota", "Kode Buku", "Peminjaman", "Pengembalian"
+                "Kode Anggota", "Kode Buku", "Peminjaman", "Pengembalian", "Selisih "
             }
         ));
         TabelPeminjaman.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -197,6 +188,10 @@ public class FormPeminjaman extends javax.swing.JFrame {
             }
         });
 
+        CboAnggota.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        Cbobuku.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -204,7 +199,6 @@ public class FormPeminjaman extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -215,10 +209,10 @@ public class FormPeminjaman extends javax.swing.JFrame {
                                     .addComponent(jLabel4))
                                 .addGap(58, 58, 58)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtKodeAnggota, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
-                                    .addComponent(txtKodeBuku)
                                     .addComponent(txtTglPinjam)
-                                    .addComponent(txtTglKembali)))
+                                    .addComponent(txtTglKembali)
+                                    .addComponent(CboAnggota, 0, 240, Short.MAX_VALUE)
+                                    .addComponent(Cbobuku, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(33, 33, 33)
                                 .addComponent(btnInsert)
@@ -228,24 +222,22 @@ public class FormPeminjaman extends javax.swing.JFrame {
                                 .addComponent(btnDelete)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnCancel)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addComponent(txtKodeAnggota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1)))
+                .addGap(32, 32, 32)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(CboAnggota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txtKodeBuku, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(Cbobuku, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addComponent(txtTglPinjam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -260,16 +252,13 @@ public class FormPeminjaman extends javax.swing.JFrame {
                     .addComponent(btnUpdate)
                     .addComponent(btnInsert))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void txtKodeAnggotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtKodeAnggotaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtKodeAnggotaActionPerformed
 
     private void txtTglKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTglKembaliActionPerformed
         // TODO add your handling code here:
@@ -343,6 +332,8 @@ public class FormPeminjaman extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> CboAnggota;
+    private javax.swing.JComboBox<String> Cbobuku;
     private javax.swing.JTable TabelPeminjaman;
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnDelete;
@@ -353,8 +344,6 @@ public class FormPeminjaman extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField txtKodeAnggota;
-    private javax.swing.JTextField txtKodeBuku;
     private javax.swing.JTextField txtTglKembali;
     private javax.swing.JTextField txtTglPinjam;
     // End of variables declaration//GEN-END:variables

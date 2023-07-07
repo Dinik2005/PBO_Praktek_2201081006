@@ -55,5 +55,10 @@ public class Peminjaman {
         public void setTglKembali(String tglKembali) {
             this.tglKembali = tglKembali;
         }
+        
+         public int getSelisih(){
+    return 1;
+}
 }
 
+   
