@@ -4,15 +4,17 @@
  */
 package Dini160623.controller;
 import Dini160623.model.*;
-import java.util.*;
-import javax.swing.JOptionPane;
-import Dini160623.view.*;
-import javax.swing.table.DefaultTableModel;
 import Dini160623.dao.*;
-
+import Dini160623.view.*;
+import java.text.ParseException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JOptionPane;
 /**
  *
- * @author ACER
+ * @author HP
  */
 public class PeminjamanController {
     FormPeminjaman view;
@@ -20,85 +22,92 @@ public class PeminjamanController {
     PeminjamanDao dao;
     AnggotaDao anggotaDao;
     BukuDao bukuDao;
-    
- 
-    
-     public PeminjamanController(FormPeminjaman view) {
+
+    public PeminjamanController(FormPeminjaman view) {
         this.view = view;
-        dao = new PeminjamanDaoImpl() {};
+        dao = new PeminjamanDaoImple();
         anggotaDao = new AnggotaDaoImpl();
         bukuDao = new BukuDaoImpl();
-        
-        
     }
     
-    public void clearForm() {
-        view.getTxtTglPinjam().setText("");
-        view.getTxtTglKembali().setText("");
-       
+    //buat clearForm
+    public void clearForm(){
+        view.getTglPinjam().setText("");
+        view.getTglKembali().setText("");
     }
+    
     public void isiCombo(){
         view.getCboAnggota().removeAllItems();
         List<Anggota> listAnggota = anggotaDao.getAll();
         for (Anggota anggota : listAnggota) {
-            view.getCboAnggota().addItem(anggota.getKodeAnggota());
+            view.getCboAnggota().addItem(anggota.getKodeAnggota()); 
         }
+        
         view.getCboBuku().removeAllItems();
         List<Buku> listBuku = bukuDao.getAll();
         for (Buku buku : listBuku) {
-            view.getCboBuku().addItem(buku.getKodeBuku());
+            view.getCboBuku().addItem(buku.getKodeBuku()); 
         }
-         
     }
     
-        public void tampil() {
-        DefaultTableModel tabelModel = (DefaultTableModel) view.getTabelPeminjaman().getModel();
+    //buat tampilan
+    public void tampil(){
+        DefaultTableModel tabelModel = (DefaultTableModel)view.getTabelPeminjaman().getModel();
         tabelModel.setRowCount(0);
         List<Peminjaman> list = dao.getAll();
-        for (Peminjaman peminjaman : list) {
-            Object[] row = {
-                peminjaman.getKodeAnggota(),
-                peminjaman.getKodeBuku(),
-                peminjaman.getTglPinjam(),
-                peminjaman.getTglKembali(),
-                peminjaman.getSelisih()
-            };
-            tabelModel.addRow(row);
+        for(Peminjaman c : list){
+            try {
+                Object[] row = {
+                    c.getKodeAnggota(),
+                    c.getKodeBuku(),
+                    c.getTglPinjam(),
+                    c.getTglKembali(),
+                    c.getSelisih()
+                };
+                tabelModel.addRow(row);
+            } catch (ParseException ex) {
+                Logger.getLogger(PeminjamanController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
-        
-      public void insert() {
-        Peminjaman peminjaman = new Peminjaman();
-        peminjaman.setKodeAnggota(view.getCboAnggota().getSelectedItem().toString());
-        peminjaman.setKodeBuku(view.getCboBuku().getSelectedItem().toString());
-        peminjaman.setTglPinjam(view.getTxtTglPinjam().getText());
-        peminjaman.setTglKembali(view.getTxtTglKembali().getText());
-        dao.insert(peminjaman);
-        JOptionPane.showMessageDialog(view, "Entri Data OK");
-    }
-      public void update() {
-        int index = view.getTabelPeminjaman().getSelectedRow();
+    
+    //aktif buton insert
+    public void insert(){
         peminjaman = new Peminjaman();
         peminjaman.setKodeAnggota(view.getCboAnggota().getSelectedItem().toString());
         peminjaman.setKodeBuku(view.getCboBuku().getSelectedItem().toString());
-        peminjaman.setTglPinjam(view.getTxtTglPinjam().getText());
-        peminjaman.setTglKembali(view.getTxtTglKembali().getText());
-        dao.update(index, peminjaman);
-        JOptionPane.showMessageDialog(view,"Update Data OK");
-        
-    }
-      public void delete(){
-        int index = view.getTabelPeminjaman().getSelectedRow();
-        dao.delete(index);
-        JOptionPane.showMessageDialog(view,"Delete Data OK");
+        peminjaman.setTglPinjam(view.getTglPinjam().getText());  // perlakuan ke tipe selain string beda
+        peminjaman.setTglKembali(view.getTglKembali().getText());
+        dao.insert(peminjaman);
+        JOptionPane.showMessageDialog(view, "Data Insert OK!");
     }
     
-    public void getPeminjaman() {
+    // aktif buton update
+    public void update(){
+        int index = view.getTabelPeminjaman().getSelectedRow();
+        peminjaman.setKodeAnggota(view.getCboAnggota().getSelectedItem().toString());
+        peminjaman.setKodeBuku(view.getCboBuku().getSelectedItem().toString());
+        peminjaman.setTglPinjam(view.getTglPinjam().getText());
+        peminjaman.setTglKembali(view.getTglKembali().getText());
+        dao.update(index, peminjaman);
+        JOptionPane.showMessageDialog(view, "Data Update OK!");
+    }
+    
+    // buton delete
+    public void delete(){
+        int index = view.getTabelPeminjaman().getSelectedRow();
+        dao.delete(index);
+        JOptionPane.showMessageDialog(view, "Data Delete OK!");
+    }
+    
+    // data gel All
+    public void getPeminjaman(){
         int index = view.getTabelPeminjaman().getSelectedRow();
         peminjaman = dao.getPeminjaman(index);
         view.getCboAnggota().setSelectedItem(peminjaman.getKodeAnggota());
         view.getCboBuku().setSelectedItem(peminjaman.getKodeBuku());
-        view.getTxtTglPinjam().setText(peminjaman.getTglPinjam());
-       
+        view.getTglPinjam().setText(peminjaman.getTglPinjam());
+        view.getTglKembali().setText(peminjaman.getTglKembali());
+        
     }
 }
